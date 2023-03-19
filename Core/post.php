@@ -43,4 +43,34 @@ class post
         $stat->execute();
         return $stat;
     }
+
+    public function read_single()
+    {
+        //create query of reading posts
+        $query = 'SELECT
+         c.name as category_name,
+         p.id,
+         p.category_id,
+         p.title,
+         p.body,
+         p.author,
+         p.created_at
+         FROM ' . $this->table . '
+          p LEFT JOIN categories c 
+          ON p.category_id = c.id
+          WHERE p.id = ? LIMIT 1';
+
+        //PREPARE STATEMENT
+        $stat = $this->connection->prepare($query);
+        $stat->bindParam(1, $this->id);
+        $stat->execute();
+        $row = $stat->fetch(PDO::FETCH_ASSOC);
+        $this->title = $row['title'];
+        $this->body = $row['body'];
+        $this->author = $row['author'];
+        $this->category_id = $row['category_id'];
+        //execute query
+        $stat->execute();
+        return $stat;
+    }
 }
