@@ -4,7 +4,7 @@ class post
 {
     //database variables
     private PDO $connection;
-    private string $table = 'posts';
+    private string $table = 'post';
 
     //post properties
     public string $id;
@@ -35,7 +35,7 @@ class post
          FROM ' . $this->table . '
           p LEFT JOIN categories c 
           ON p.category_id = c.id
-          ORDERED BY p.created DESC';
+          ORDER BY p.created_at DESC';
 
         //PREPARE STATEMENT
         $stat = $this->connection->prepare($query);
