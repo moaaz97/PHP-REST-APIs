@@ -12,6 +12,7 @@ class post
     public string $title;
     public string $body;
     public string $author;
+    public string $category_name;
     public string $created_at;
 
     //Initialize with database connection
@@ -65,12 +66,14 @@ class post
         $stat->bindParam(1, $this->id);
         $stat->execute();
         $row = $stat->fetch(PDO::FETCH_ASSOC);
-        $this->title = $row['title'];
-        $this->body = $row['body'];
-        $this->author = $row['author'];
-        $this->category_id = $row['category_id'];
-        //execute query
-        $stat->execute();
-        return $stat;
+        if ($row) {
+            $this->title = $row['title'];
+            $this->body = $row['body'];
+            $this->author = $row['author'];
+            $this->category_id = $row['category_id'];
+            $this->category_name = $row['category_name'];
+        } else {
+            die("The Post is Not Exist");
+        }
     }
 }
