@@ -66,6 +66,7 @@ class post
         $stat->bindParam(1, $this->id);
         $stat->execute();
         $row = $stat->fetch(PDO::FETCH_ASSOC);
+        //check if there is a record with that id.
         if ($row) {
             $this->title = $row['title'];
             $this->body = $row['body'];
@@ -73,7 +74,7 @@ class post
             $this->category_id = $row['category_id'];
             $this->category_name = $row['category_name'];
         } else {
-            die("The Post is Not Exist");
+            die("The Post with id: {$this->id} is Not Exist");
         }
     }
 }
